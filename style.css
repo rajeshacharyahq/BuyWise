@@ -43,14 +43,13 @@
 
 [data-theme="dark"] .hero-card {
   background:
-    radial-gradient(circle at top right, color-mix(in srgb, var(--primary) 18%, transparent), transparent 34%),
-    radial-gradient(circle at 10% 100%, color-mix(in srgb, var(--success) 12%, transparent), transparent 30%),
+    linear-gradient(90deg, color-mix(in srgb, var(--success) 8%, transparent), transparent 34%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--primary) 14%, transparent), transparent 36%),
     linear-gradient(135deg, #0e1829, color-mix(in srgb, var(--primary-soft) 52%, var(--bg)));
 }
 
 [data-theme="dark"] .mini-card,
-[data-theme="dark"] .hero-badges span,
-[data-theme="dark"] .floating-chip {
+[data-theme="dark"] .hero-badges span {
   background: color-mix(in srgb, var(--card) 88%, transparent);
 }
 
@@ -181,22 +180,10 @@ h1 {
   border: 1px solid var(--border);
   border-radius: 28px;
   background:
-    radial-gradient(circle at top right, color-mix(in srgb, var(--primary) 16%, transparent), transparent 34%),
-    radial-gradient(circle at 10% 100%, color-mix(in srgb, var(--success) 10%, transparent), transparent 30%),
+    linear-gradient(90deg, color-mix(in srgb, var(--success) 7%, transparent), transparent 34%),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--primary) 12%, transparent), transparent 36%),
     linear-gradient(135deg, var(--card), color-mix(in srgb, var(--primary-soft) 55%, var(--bg)));
   box-shadow: var(--shadow);
-}
-
-.hero-card::before {
-  content: "";
-  position: absolute;
-  right: -80px;
-  bottom: -120px;
-  width: 260px;
-  height: 260px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--success) 16%, transparent);
-  pointer-events: none;
 }
 
 .hero-card::after {
@@ -296,43 +283,6 @@ h1 {
 .mini-metrics small,
 .mini-metrics strong {
   display: block;
-}
-
-.floating-chip {
-  position: absolute;
-  display: inline-grid;
-  place-items: center;
-  padding: 8px 11px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--card);
-  box-shadow: var(--shadow);
-  color: var(--primary);
-  font-weight: 850;
-  font-size: 0.82rem;
-}
-
-.chip-rupee {
-  top: 6px;
-  right: 34px;
-  width: 42px;
-  height: 42px;
-  font-size: 1.2rem;
-}
-
-.chip-risk {
-  right: 0;
-  bottom: 28px;
-}
-
-.chip-emi {
-  left: 10px;
-  bottom: 54px;
-}
-
-.chip-budget {
-  left: 42px;
-  top: 18px;
 }
 
 .planner,
@@ -832,9 +782,6 @@ button:focus-visible {
     margin-left: 0;
   }
 
-  .floating-chip {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
