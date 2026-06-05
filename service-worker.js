@@ -1,4 +1,4 @@
-const CACHE_NAME = "buywise-cache-v17";
+const CACHE_NAME = "buywise-cache-v18";
 const APP_FILES = [
   "./",
   "./index.html",
