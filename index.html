@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12315f">
+  <meta name="description" content="BuyWise helps you check whether a phone, bike, car, or house purchase is financially safe.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BuyWise">
+  <title>BuyWise - Know before you buy</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="BuyWise home">
+      <img src="./icon.svg" alt="" width="42" height="42">
+      <span>
+        <strong>BuyWise</strong>
+        <small>Know before you buy</small>
+      </span>
+    </a>
+    <button class="theme-toggle" type="button" id="theme-toggle" aria-label="Switch to dark theme">
+      <span aria-hidden="true">◐</span>
+    </button>
+  </header>
+
+  <main id="top" class="app-shell">
+    <section class="hero hero-card" aria-labelledby="app-title">
+      <div class="hero-content">
+        <p class="eyebrow">Personal affordability checker</p>
+        <h1 id="app-title">BuyWise</h1>
+        <p class="tagline">Know before you buy</p>
+        <p class="hero-copy">Check whether buying a phone, bike, car, or house is financially safe based on your income, EMIs, savings, and monthly balance.</p>
+        <div class="hero-badges">
+          <span>Offline PWA</span>
+          <span>No data leaves browser</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="mini-card">
+          <div class="mini-card-top">
+            <span>Affordability score</span>
+            <strong>BuyWise</strong>
+          </div>
+          <div class="mini-progress">
+            <span></span>
+          </div>
+          <div class="mini-metrics">
+            <div>
+              <small>EMI check</small>
+              <strong>Safe</strong>
+            </div>
+            <div>
+              <small>Emergency fund</small>
+              <strong>3.4 mo</strong>
+            </div>
+          </div>
+        </div>
+        <span class="floating-chip chip-rupee">₹</span>
+        <span class="floating-chip chip-risk">Risk</span>
+        <span class="floating-chip chip-emi">EMI</span>
+        <span class="floating-chip chip-budget">Budget</span>
+      </div>
+    </section>
+
+    <form id="affordability-form" class="planner" novalidate>
+      <section class="panel" aria-labelledby="purchase-title">
+        <div class="section-heading">
+          <span class="step">1</span>
+          <div>
+            <h2 id="purchase-title">Choose Purchase Type</h2>
+            <p>Select what you are planning to buy.</p>
+          </div>
+        </div>
+        <label class="field purchase-select">
+          <span>Purchase type</span>
+          <select id="purchase-type" name="purchaseType">
+            <option value="phone">Phone - short tenure, fast depreciation</option>
+            <option value="bike">Bike - fuel, service, insurance</option>
+            <option value="car">Car - EMI plus running costs</option>
+            <option value="house">House - long-term cash flow lock</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="panel" aria-labelledby="income-title">
+        <div class="section-heading">
+          <span class="step">2</span>
+          <div>
+            <h2 id="income-title">Income</h2>
+            <p>Use your reliable take-home income.</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label class="field">
+            <span>Income type</span>
+            <select id="income-type" name="incomeType">
+              <option value="monthly">Monthly</option>
+              <option value="annual">Annual</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Income amount</span>
+            <input id="income-amount" class="formatted-number" name="incomeAmount" type="text" inputmode="numeric" autocomplete="off" placeholder="75,000" data-number="currency">
+          </label>
+          <label class="field field-wide">
+            <span>Monthly essential expenses</span>
+            <input id="monthly-expenses" class="formatted-number" name="monthlyExpenses" type="text" inputmode="numeric" autocomplete="off" placeholder="35,000" data-number="currency">
+            <small>Rent, food, bills, family support, travel, medicine, school fees, and other fixed monthly expenses.</small>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="savings-title">
+        <div class="section-heading">
+          <span class="step">3</span>
+          <div>
+            <h2 id="savings-title">Savings</h2>
+            <p>Check the impact on your available cash.</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label class="field">
+            <span>Current savings / available cash</span>
+            <input id="savings" class="formatted-number" name="savings" type="text" inputmode="numeric" autocomplete="off" placeholder="3,00,000" data-number="currency">
+          </label>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="existing-emi-title">
+        <div class="section-heading with-action">
+          <div class="heading-left">
+            <span class="step">4</span>
+            <div>
+              <h2 id="existing-emi-title">Existing EMIs</h2>
+              <p>Add loans or card payments already running.</p>
+            </div>
+          </div>
+          <button class="ghost-button" type="button" id="add-emi">+ Add EMI</button>
+        </div>
+        <div id="emi-list" class="emi-list" aria-live="polite"></div>
+        <div class="inline-total">
+          <span>Total monthly existing EMI</span>
+          <strong id="existing-emi-total">₹0</strong>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="details-title">
+        <div class="section-heading">
+          <span class="step">5</span>
+          <div>
+            <h2 id="details-title">Purchase Details</h2>
+            <p id="details-copy">Enter phone price, tenure, and ownership costs.</p>
+          </div>
+        </div>
+        <div id="purchase-fields" class="form-grid"></div>
+      </section>
+
+      <p id="validation-message" class="validation" aria-live="polite"></p>
+
+      <div class="sticky-actions">
+        <button class="primary-button" type="submit">Check Affordability</button>
+        <button class="secondary-button" type="button" id="reset-data">Reset</button>
+      </div>
+    </form>
+
+    <section id="results" class="results hidden" aria-live="polite" aria-labelledby="result-title">
+      <div class="result-card">
+        <div class="result-topline">
+          <div>
+            <p class="eyebrow">Affordability verdict</p>
+            <h2 id="result-title">Looks manageable</h2>
+          </div>
+          <span id="risk-badge" class="risk-badge good">Good</span>
+        </div>
+        <div class="risk-meter" aria-label="Risk meter">
+          <span id="risk-fill"></span>
+        </div>
+
+        <div class="purchase-summary" aria-label="Buying plan summary">
+          <h3 id="purchase-summary-title">Buying plan</h3>
+          <div class="summary-grid" id="purchase-summary-grid">
+            <div><span>Purchase type</span><strong id="summary-type">-</strong></div>
+            <div><span>Purchase price</span><strong id="summary-price">₹0</strong></div>
+            <div><span>Down payment</span><strong id="summary-down-payment">₹0</strong></div>
+            <div><span>Loan amount</span><strong id="summary-loan">₹0</strong></div>
+            <div><span>Tenure</span><strong id="summary-tenure">-</strong></div>
+            <div><span>Interest rate</span><strong id="summary-interest">0%</strong></div>
+            <div><span>Monthly ownership cost</span><strong id="summary-extra">₹0</strong></div>
+            <div id="summary-setup-card" class="hidden"><span>Setup / registration cost</span><strong id="summary-setup">₹0</strong></div>
+            <div id="summary-cash-left-card" class="hidden"><span>Cash left after setup</span><strong id="summary-cash-left">₹0</strong></div>
+          </div>
+        </div>
+
+        <section class="panel down-payment-check" aria-labelledby="down-payment-title">
+          <h2 id="down-payment-title">Down Payment Check</h2>
+          <p id="down-payment-copy"></p>
+          <div class="metrics-grid compact">
+            <div><span>Current down payment</span><strong id="dp-current">₹0</strong></div>
+            <div><span>Current down payment %</span><strong id="dp-current-percent">0%</strong></div>
+            <div><span>Market minimum</span><strong id="dp-market-min">₹0</strong></div>
+            <div><span>Market minimum gap</span><strong id="dp-market-gap">₹0</strong></div>
+            <div><span>BuyWise recommended</span><strong id="dp-safe-recommended">₹0</strong></div>
+            <div><span>Recommended gap</span><strong id="dp-safe-gap">₹0</strong></div>
+          </div>
+        </section>
+
+        <section class="buying-power" aria-labelledby="buying-power-title">
+          <h2 id="buying-power-title">Buying Power</h2>
+          <p id="buying-power-copy"></p>
+          <div class="metrics-grid compact buying-power-grid">
+            <div><span>Recommended budget now</span><strong id="buying-recommended">₹0</strong></div>
+            <div><span>Stretch budget</span><strong id="buying-stretch">₹0</strong></div>
+            <div><span>Avoid above</span><strong id="buying-avoid">₹0</strong></div>
+            <div><span>Main reason</span><strong id="buying-reason">-</strong></div>
+            <div><span>Safe deployable cash</span><strong id="buying-safe-cash">₹0</strong></div>
+            <div><span>Suggested down payment</span><strong id="buying-suggested-down">₹0</strong></div>
+            <div><span>Extra down payment possible</span><strong id="buying-extra-down">₹0</strong></div>
+            <div><span>Emergency reserve protected</span><strong id="buying-reserve">₹0</strong></div>
+          </div>
+        </section>
+
+        <div class="metrics-grid">
+          <div><span>Monthly income</span><strong id="metric-income">₹0</strong></div>
+          <div class="metric-with-note"><span>Monthly essential expenses</span><strong id="metric-expenses">₹0</strong><small id="expenses-note"></small></div>
+          <div><span>Existing EMI</span><strong id="metric-existing">₹0</strong></div>
+          <div><span>New EMI</span><strong id="metric-new-emi">₹0</strong></div>
+          <div><span>New EMI-to-income ratio</span><strong id="metric-emi-ratio">0%</strong></div>
+          <div><span>Total EMI + ownership ratio</span><strong id="metric-obligation-ratio">0%</strong></div>
+          <div><span>Extra ownership cost</span><strong id="metric-extra">₹0</strong></div>
+          <div><span>Total EMI + ownership cost</span><strong id="metric-outflow">₹0</strong></div>
+          <div><span>Balance after EMI + ownership</span><strong id="metric-balance-after-emi">₹0</strong></div>
+          <div><span>Real monthly surplus</span><strong id="metric-real-surplus">₹0</strong></div>
+          <div><span>Available savings</span><strong id="metric-savings">₹0</strong></div>
+          <div><span>Savings left</span><strong id="metric-savings-left">₹0</strong></div>
+          <div><span>Emergency cover</span><strong id="metric-emergency-cover">0 months</strong></div>
+          <div><span>Minimum emergency fund needed</span><strong id="metric-min-emergency">₹0</strong></div>
+          <div><span>Emergency fund gap</span><strong id="metric-emergency-gap">₹0</strong></div>
+        </div>
+      </div>
+
+      <div class="advice-grid">
+        <article class="advice-card">
+          <h3 id="why-buy-title">Why you can buy</h3>
+          <p id="why-buy"></p>
+        </article>
+        <article class="advice-card">
+          <h3 id="why-wait-title">Why you should wait</h3>
+          <p id="why-wait"></p>
+        </article>
+        <article class="advice-card">
+          <h3>What can go wrong</h3>
+          <p id="what-wrong"></p>
+        </article>
+        <article class="advice-card">
+          <h3>Safer next step</h3>
+          <p id="next-step"></p>
+        </article>
+      </div>
+
+      <section class="panel safer-budget" aria-labelledby="safer-title">
+        <h2 id="safer-title">Selected Purchase Check</h2>
+        <p id="safer-budget-copy"></p>
+        <div class="metrics-grid compact">
+          <div><span>Theoretical EMI capacity</span><strong id="theoretical-emi">₹0</strong></div>
+          <div><span>Safe EMI right now</span><strong id="safe-emi-now">₹0</strong></div>
+          <div><span>Approx safer loan amount</span><strong id="safe-loan">₹0</strong></div>
+          <div><span>Approx safer purchase price</span><strong id="safe-price">₹0</strong></div>
+          <div><span>Current down payment</span><strong id="selected-current-down">₹0</strong></div>
+          <div><span>Suggested safer down payment</span><strong id="selected-suggested-down">₹0</strong></div>
+          <div><span>Current EMI</span><strong id="selected-current-emi">₹0</strong></div>
+          <div><span>EMI with suggested down payment</span><strong id="selected-suggested-emi">₹0</strong></div>
+          <div><span>Real surplus with suggested down payment</span><strong id="selected-suggested-surplus">₹0</strong></div>
+        </div>
+      </section>
+    </section>
+
+    <p class="disclaimer">This app is an educational affordability checker, not bank loan approval or financial advice. Actual eligibility depends on lender policy, credit score, job stability, age, documents, and other factors.</p>
+  </main>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
